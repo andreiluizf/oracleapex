@@ -1,10 +1,3 @@
-<html><!-- Include Prism.js CSS and JS -->
-  <head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
-  </head>  
-  <body>
-
 How to make a checkbox selector for Interactive Reports  on Oracle APEX 24.2<br/>
 ( Como fazer seletor para Relatórios Interativos no APEX 24.2 )
 
