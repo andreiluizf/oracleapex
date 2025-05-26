@@ -1,16 +1,22 @@
-How to make a checkbox selector for Interactive Reports  on Oracle APEX 24.2<br/>
-( Como fazer seletor para Relatórios Interativos no APEX 24.2 )
-
+# How to make a checkbox selector for Interactive Reports  on Oracle APEX 24.2<br/>
+### Como fazer seletor para Relatórios Interativos no APEX 24.2
+```diff
 First thing, you're going to create a virtual column on your query, like that: 
-`| SQL |`
+# Primeiro, você vai criar uma coluna virtual na sua consulta:
+```
+` SQL `
 ```sql
   apex_item.checkbox(1, pk_id) as checkbox 
 ```
 
+```diff
 Where pk_id is your table's primary_key column.
+# Onde pk_id é a chave primária da sua tabela.
 
-Then you're going to rename the column heading to this: 
-`| HTML |`
+Then you're going to rename the column heading to this:
+
+```
+` HTML `
 ```html
 <input 
    type  = "checkbox"
@@ -21,7 +27,7 @@ Then you're going to rename the column heading to this:
 ```
 
 The id will be the key to the javascript code, while type and class will allow you to style your checkbox properly: 
-`| CSS |`
+` CSS `
 ```css
 th input.centered-checkbox {
   display:         block;
@@ -37,8 +43,10 @@ input[type="checkbox"][name="f01"] {
   height: 11px!important;
 }
 ```
-
-For the javascript, you can use the following snippet to put on your global.js file on Static Workspace/Application Files: `| JS |`
+```diff
+For the javascript, you can use the following snippet to put on your global.js file on Static Workspace/Application Files: 
+```
+` JS `
 ```js
 function setupCheckboxManager({
   itemName,          // e.g., "P1_SELECTED_IDS"
