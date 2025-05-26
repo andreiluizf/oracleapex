@@ -1,28 +1,24 @@
 How to make a checkbox selector for Interactive Reports  on Oracle APEX 24.2<br/>
 ( Como fazer seletor para Relatórios Interativos no APEX 24.2 )
 
-First thing, you're going to create a virtual column on your query, like that:
+First thing, you're going to create a virtual column on your query, like that: | SQL |
 
-| SQL |
-
+```
   apex_item.checkbox(1, pk_id) as checkbox 
-
-| END OF SQL |
+```
 
 Where pk_id is your table's primary_key column.
 
-Then you're going to rename the column heading to this:
+Then you're going to rename the column heading to this: | HTML |
 
-| HTML |
-
+```
 <input 
    type  = "checkbox"
    id    = "selectunselectall" 
    class = "centered-checkbox"
 
 />
-
-| END OF HTML |
+```
 
 The id will be the key to the javascript code, while type and class will allow you to style your checkbox properly.
 
