@@ -1,17 +1,17 @@
 How to make a checkbox selector for Interactive Reports  on Oracle APEX 24.2<br/>
 ( Como fazer seletor para Relatórios Interativos no APEX 24.2 )
 
-First thing, you're going to create a virtual column on your query, like that: | SQL |
-
-```
+First thing, you're going to create a virtual column on your query, like that: 
+`| SQL |`
+```sql
   apex_item.checkbox(1, pk_id) as checkbox 
 ```
 
 Where pk_id is your table's primary_key column.
 
-Then you're going to rename the column heading to this: | HTML |
-
-```
+Then you're going to rename the column heading to this: 
+`| HTML |`
+```html
 <input 
    type  = "checkbox"
    id    = "selectunselectall" 
@@ -20,10 +20,9 @@ Then you're going to rename the column heading to this: | HTML |
 />
 ```
 
-The id will be the key to the javascript code, while type and class will allow you to style your checkbox properly.
-
-| CSS |
-
+The id will be the key to the javascript code, while type and class will allow you to style your checkbox properly: 
+`| CSS |`
+```css
 th input.centered-checkbox {
   display:         block;
   margin:          0 auto;
@@ -37,21 +36,15 @@ input[type="checkbox"][name="f01"] {
   width:  11px!important;
   height: 11px!important;
 }
+```
 
-| END OF CCS | 
-
-For the javascript, you can use the following snippet to put on your global.js file on Static Workspace/Application Files:
-
-| JS |
-
+For the javascript, you can use the following snippet to put on your global.js file on Static Workspace/Application Files: `| JS |`
+```js
 function setupCheckboxManager({
   itemName,          // e.g., "P1_SELECTED_IDS"
   checkboxName,      // e.g., "f01"
   selectAllCheckbox  // e.g., "#selectunselectall"
-})
-   // This highlighted part you'll use on "Execute when page loads",
-   // replacing the parameters with the respective values
-   // and, of course, putting a ";" at the end ;)
+})  // This first part you'll use on "Execute when page loads", replacing the parameters with the respective values and, of course, putting a ";" at the end ;)
 
 {
   const $ = apex.jQuery;
@@ -114,5 +107,4 @@ function setupCheckboxManager({
     bindCheckboxEvents();
   });
 }
-</body>
-</html>
+```
