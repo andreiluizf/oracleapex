@@ -14,6 +14,7 @@ Where pk_id is your table's primary_key column.
 # Onde pk_id é a chave primária da sua tabela.
 
 Then you're going to rename the column heading to this:
+# Então, você vai renomear a coluna assim:
 
 ```
 ` HTML `
