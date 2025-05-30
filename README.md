@@ -1,1 +1,1 @@
-<a href="https://github.com/andreiluizf/oracleapex/blob/main/checkbox_on_ir.md#how-to-make-a-checkbox-selector-for-interactive-reports--on-oracle-apex-242">How to make a checkbox selector for Interactive Reports on Oracle APEX 24.2</a>
+<a href="https://github.com/andreiluizf/oracleapex/blob/main/checkbox_on_ir.md#how-to-make-a-checkbox-selector-for-interactive-reports--on-oracle-apex-242"Checkbox selector for Interactive Reports</a> (Oracle APEX 24.2)
