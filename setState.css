@@ -1,0 +1,755 @@
+/* *** Enhanced APEX Item & Region State CSS *** 
+ * Version: 3.0
+ * Optimized for performance with enhanced visual feedback
+ */
+
+:root {
+  /* Animation timings - consistent with JS */
+  --apx-lock-dur: 180ms;
+  --apx-lock-ease: cubic-bezier(.2,.7,.2,1);
+  --apx-lock-dim: .7;
+  --apx-lock-blur: .12px;
+  
+  /* Layout animations */
+  --apx-layout-dur: 300ms;
+  --apx-layout-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Enhanced color palette */
+  --apx-lock-color: rgba(229, 57, 53, 0.45);
+  --apx-lock-bg: rgba(0, 0, 0, 0.02);
+  --apx-disabled-color: rgba(0, 0, 0, 0.38);
+  --apx-success-color: #4caf50;
+  --apx-warning-color: #ff9800;
+  --apx-error-color: #f44336;
+  --apx-info-color: #2196F3;
+  
+  /* Spacing and sizing */
+  --apx-icon-size: 16px;
+  --apx-icon-size-lg: 24px;
+  --apx-icon-offset: .55rem;
+  --apx-border-radius: 4px;
+  
+  /* Z-index hierarchy */
+  --apx-z-mask: 100;
+  --apx-z-icon: 101;
+  --apx-z-loading: 9999;
+}
+
+/* === BASE CONTAINER STYLES === */
+
+.t-Form-fieldContainer,
+.a-Form-fieldContainer { 
+  position: relative;
+  transition: all var(--apx-lock-dur) var(--apx-lock-ease);
+  will-change: opacity, transform;
+}
+
+/* === ITEM LOCK STATES === */
+
+.t-Form-fieldContainer.apex-lock,
+.a-Form-fieldContainer.apex-lock {
+  pointer-events: none !important;
+  user-select: none;
+  border-radius: var(--apx-border-radius);
+  position: relative;
+}
+
+/* Blur effect for locked items */
+.t-Form-fieldContainer.apex-lock .t-Form-labelContainer,
+.t-Form-fieldContainer.apex-lock .t-Form-inputContainer,
+.a-Form-fieldContainer.apex-lock .a-Form-labelContainer,
+.a-Form-fieldContainer.apex-lock .a-Form-inputContainer {
+  filter: blur(var(--apx-lock-blur)) grayscale(.7);
+  opacity: .6;
+  transition: 
+    filter var(--apx-lock-dur) var(--apx-lock-ease),
+    opacity var(--apx-lock-dur) var(--apx-lock-ease);
+  will-change: filter, opacity;
+}
+
+/* Hide value option for locked items */
+.apex-lock-hide-value input,
+.apex-lock-hide-value select,
+.apex-lock-hide-value textarea {
+  color: transparent !important;
+  text-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+
+/* Lock icon for items */
+.t-Form-fieldContainer::after,
+.a-Form-fieldContainer::after {
+  content: "";
+  position: absolute;
+  top: var(--apx-icon-offset); 
+  right: var(--apx-icon-offset);
+  width: var(--apx-icon-size); 
+  height: var(--apx-icon-size);
+  background: var(--apx-lock-color);
+  opacity: 0;
+  transform: scale(.9) rotate(-3deg);
+  pointer-events: none;
+  transition: 
+    opacity var(--apx-lock-dur) var(--apx-lock-ease),
+    transform var(--apx-lock-dur) var(--apx-lock-ease);
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 8V7a5 5 0 1 0-10 0v1H5v14h14V8h-2zm-8-1a3 3 0 1 1 6 0v1H9V7zm-1 6h8v7H8v-7z"/></svg>') no-repeat center/contain;
+  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 8V7a5 5 0 1 0-10 0v1H5v14h14V8h-2zm-8-1a3 3 0 1 1 6 0v1H9V7zm-1 6h8v7H8v-7z"/></svg>') no-repeat center/contain;
+  z-index: 90;
+  filter: drop-shadow(0 0 3px white) drop-shadow(0 0 6px white);
+}
+
+.t-Form-fieldContainer.apex-lock::after,
+.a-Form-fieldContainer.apex-lock::after {
+  opacity: .4;
+  transform: scale(1) rotate(0deg);
+}
+
+/* === REQUIRED STATE === */
+
+.t-Form-fieldContainer.is-required .t-Form-label::after,
+.a-Form-fieldContainer.is-required .a-Form-label::after {
+  content: " *";
+  color: var(--apx-error-color);
+  font-weight: bold;
+  transition: color var(--apx-lock-dur) var(--apx-lock-ease);
+}
+
+/* Dim asterisk when locked */
+.t-Form-fieldContainer.apex-lock.is-required .t-Form-label::after,
+.a-Form-fieldContainer.apex-lock.is-required .a-Form-label::after {
+  color: var(--apx-disabled-color);
+}
+
+/* === REGION STATES === */
+
+.apex-region-locked { 
+  position: relative;
+  transition: all var(--apx-lock-dur) var(--apx-lock-ease);
+  border-radius: var(--apx-border-radius);
+  overflow: hidden;
+}
+
+/* Region content blur */
+.apex-region-locked .t-Region,
+.apex-region-locked .t-Region-body,
+.apex-region-locked .t-Region-content,
+.apex-region-locked .a-Region,
+.apex-region-locked .a-Region-body {
+  filter: blur(.8px) grayscale(.3);
+  opacity: .6;
+  transition:
+    filter var(--apx-lock-dur) var(--apx-lock-ease),
+    opacity var(--apx-lock-dur) var(--apx-lock-ease);
+  will-change: filter, opacity;
+}
+
+/* Region mask overlay */
+.apex-region-locked > .apex-region-mask {
+  position: absolute; 
+  inset: 0; 
+  z-index: var(--apx-z-mask);
+  background: linear-gradient(45deg, transparent 49%, rgba(0,0,0,.01) 50%, transparent 51%);
+  cursor: not-allowed;
+  pointer-events: all;
+  transition: background var(--apx-lock-dur) var(--apx-lock-ease);
+}
+
+ .apex-region-locked > .apex-region-mask:hover {
+   background: rgba(229, 57, 53, 0.02);
+ }
+
+/* Region lock icon */
+.apex-region-lock-icon {
+  position: absolute; 
+  top: var(--apx-icon-offset); 
+  right: var(--apx-icon-offset);
+  width: 18px; 
+  height: 18px; 
+  z-index: var(--apx-z-icon);
+  color: var(--apx-lock-color);
+  background: currentColor;
+  opacity: 0;
+  transform: scale(.9) rotate(-5deg);
+  pointer-events: none;
+  transition:
+    opacity var(--apx-lock-dur) var(--apx-lock-ease),
+    transform var(--apx-lock-dur) var(--apx-lock-ease);
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 8V7a5 5 0 1 0-10 0v1H5v14h14V8h-2zm-8-1a3 3 0 1 1 6 0v1H9V7zm-1 6h8v7H8v-7z"/></svg>') no-repeat center/contain;
+  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 8V7a5 5 0 1 0-10 0v1H5v14h14V8h-2zm-8-1a3 3 0 1 1 6 0v1H9V7zm-1 6h8v7H8v-7z"/></svg>') no-repeat center/contain;
+}
+
+.apex-region-locked > .apex-region-lock-icon { 
+  opacity: .35; 
+  transform: scale(1) rotate(0deg); 
+}
+
+/* Centered large lock icon */
+.apex-region-lock-icon.center {
+  top: 50%;
+  right: 50%; 
+  right: auto; 
+  transform: translate(-50%, -50%) scale(.9);
+  width: 48px; 
+  height: 48px;
+  opacity: 0;
+}
+
+.apex-region-locked > .apex-region-lock-icon.center { 
+  transform: translate(-50%, -50%) scale(1);
+  opacity: .25;
+}
+
+/* === HIDE/SHOW STATES === */
+
+.apex-region-hidden { 
+  display: none !important; 
+}
+
+.apex-grid-col-hidden { 
+  display: none !important; 
+}
+
+/* Smooth hide animation */
+.apex-item-hiding,
+.apex-region-hiding {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: 
+    opacity var(--apx-lock-dur) var(--apx-lock-ease),
+    transform var(--apx-lock-dur) var(--apx-lock-ease);
+}
+
+/* Smooth show animation */
+.apex-item-showing,
+.apex-region-showing {
+  animation: fadeInUp var(--apx-lock-dur) var(--apx-lock-ease);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === LAYOUT TRANSITIONS === */
+
+.apx-column-transition {
+  transition: all var(--apx-layout-dur) var(--apx-layout-ease) !important;
+  will-change: width, opacity, transform;
+}
+
+.apx-col-expanding {
+  animation: expandColumn var(--apx-layout-dur) var(--apx-layout-ease) forwards;
+}
+
+.apx-col-collapsing {
+  animation: collapseColumn var(--apx-layout-dur) var(--apx-layout-ease) forwards;
+}
+
+@keyframes expandColumn {
+  from {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes collapseColumn {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+}
+
+/* === VALIDATION STATES === */
+
+/* Success state */
+.apex-success {
+  border-left: 4px solid var(--apx-success-color) !important;
+  background: linear-gradient(90deg, rgba(76, 175, 80, 0.05), transparent);
+  position: relative;
+}
+
+.apex-success::before {
+  content: "✓";
+  position: absolute;
+  top: var(--apx-icon-offset);
+  right: var(--apx-icon-offset);
+  color: var(--apx-success-color);
+  font-weight: bold;
+  font-size: var(--apx-icon-size);
+  animation: checkmarkPop 0.3s ease-out;
+}
+
+@keyframes checkmarkPop {
+  0% { transform: scale(0); }
+  70% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Error state */
+.apex-error {
+  border-left: 4px solid var(--apx-error-color) !important;
+  background: linear-gradient(90deg, rgba(244, 67, 54, 0.05), transparent);
+  position: relative;
+}
+
+.apex-error::before {
+  content: "⚠";
+  position: absolute;
+  top: var(--apx-icon-offset);
+  right: var(--apx-icon-offset);
+  color: var(--apx-error-color);
+  font-weight: bold;
+  font-size: var(--apx-icon-size);
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* Warning state */
+.apex-warning {
+  border-left: 4px solid var(--apx-warning-color) !important;
+  background: linear-gradient(90deg, rgba(255, 152, 0, 0.05), transparent);
+  position: relative;
+}
+
+.apex-warning::before {
+  content: "⚡";
+  position: absolute;
+  top: var(--apx-icon-offset);
+  right: var(--apx-icon-offset);
+  color: var(--apx-warning-color);
+  font-weight: bold;
+  font-size: var(--apx-icon-size);
+}
+
+/* Info state */
+.apex-info {
+  border-left: 4px solid var(--apx-info-color) !important;
+  background: linear-gradient(90deg, rgba(33, 150, 243, 0.05), transparent);
+  position: relative;
+}
+
+.apex-info::before {
+  content: "ⓘ";
+  position: absolute;
+  top: var(--apx-icon-offset);
+  right: var(--apx-icon-offset);
+  color: var(--apx-info-color);
+  font-weight: bold;
+  font-size: var(--apx-icon-size);
+}
+
+/* === ATTENTION EFFECTS === */
+
+.apex-attention {
+  animation: pulseAttention 2s ease-in-out;
+}
+
+@keyframes pulseAttention {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.4);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 0 8px rgba(33, 150, 243, 0);
+    transform: scale(1.01);
+  }
+}
+
+/* === LOADING STATE === */
+
+.apex-state-changing {
+  position: relative;
+  overflow: hidden;
+}
+
+.apex-state-changing::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--apx-info-color), transparent);
+  animation: loadingBar 1s ease-in-out infinite;
+  z-index: var(--apx-z-loading);
+}
+
+@keyframes loadingBar {
+  0% { left: -100%; }
+  50% { left: 0%; }
+  100% { left: 100%; }
+}
+
+/* === FOCUS MANAGEMENT === */
+
+.apex-lock *:focus,
+.apex-region-locked *:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Maintain focus visibility for non-locked items */
+.t-Form-fieldContainer:not(.apex-lock) input:focus,
+.t-Form-fieldContainer:not(.apex-lock) select:focus,
+.t-Form-fieldContainer:not(.apex-lock) textarea:focus,
+.a-Form-fieldContainer:not(.apex-lock) input:focus,
+.a-Form-fieldContainer:not(.apex-lock) select:focus,
+.a-Form-fieldContainer:not(.apex-lock) textarea:focus {
+  outline-offset: 2px;
+}
+
+/* === RESPONSIVE DESIGN === */
+
+@media (max-width: 768px) {
+  :root {
+    --apx-icon-size: 20px;
+    --apx-icon-size-lg: 28px;
+    --apx-icon-offset: 12px;
+  }
+  
+  .apx-column-transition {
+    transition-duration: calc(var(--apx-layout-dur) * 0.7) !important;
+  }
+  
+  /* Stack columns on mobile */
+  .apx-col-expanding,
+  .apx-col-collapsing {
+    width: 100% !important;
+    flex: none !important;
+  }
+  
+  .apex-region-lock-icon {
+    width: var(--apx-icon-size-lg);
+    height: var(--apx-icon-size-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Simplified animations on very small screens */
+  .apex-item-hiding,
+  .apex-region-hiding,
+  .apex-item-showing,
+  .apex-region-showing {
+    animation: none;
+    transition: opacity var(--apx-lock-dur) ease;
+  }
+}
+
+/* === THEME SUPPORT === */
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --apx-lock-color: rgba(239, 83, 80, 0.6);
+    --apx-lock-bg: rgba(255, 255, 255, 0.02);
+    --apx-disabled-color: rgba(255, 255, 255, 0.38);
+    --apx-success-color: #66bb6a;
+    --apx-warning-color: #ffa726;
+    --apx-error-color: #ef5350;
+    --apx-info-color: #42a5f5;
+  }
+  
+  .apex-region-locked > .apex-region-mask:hover {
+    background: rgba(239, 83, 80, 0.03);
+  }
+  
+  .apex-lock-hide-value input,
+  .apex-lock-hide-value select,
+  .apex-lock-hide-value textarea {
+    text-shadow: 0 0 8px rgba(255,255,255,0.3);
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  :root {
+    --apx-lock-color: #ff0000;
+    --apx-lock-dim: 0.6;
+    --apx-lock-blur: 0px;
+  }
+  
+  .apex-lock,
+  .apex-region-locked {
+    border: 2px solid #ff0000 !important;
+  }
+  
+  .apex-region-lock-icon,
+  .t-Form-fieldContainer::after,
+  .a-Form-fieldContainer::after {
+    opacity: 1 !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --apx-lock-dur: 0ms;
+    --apx-layout-dur: 0ms;
+  }
+  
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* === PRINT STYLES === */
+
+@media print {
+  .apex-lock,
+  .apex-region-locked {
+    filter: none !important;
+    opacity: 1 !important;
+  }
+  
+  .apex-region-lock-icon,
+  .t-Form-fieldContainer::after,
+  .a-Form-fieldContainer::after,
+  .apex-region-mask {
+    display: none !important;
+  }
+  
+  .apex-region-hidden,
+  .apex-grid-col-hidden {
+    display: block !important;
+    page-break-inside: avoid;
+  }
+}
+
+/* === APEX COMPONENT SPECIFIC === */
+
+/* Interactive Grid */
+.t-IRR-region.apex-region-locked .a-IRR {
+  pointer-events: none;
+  filter: grayscale(0.5) opacity(0.7);
+}
+
+.t-IRR-region.apex-region-locked .a-IRR-toolbar {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Classic Report */
+.t-Report.apex-region-locked table {
+  filter: grayscale(0.3);
+  opacity: 0.6;
+}
+
+/* Cards */
+.t-Card.apex-region-locked {
+  transform: scale(0.98);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+}
+
+/* Charts */
+.t-Region--chart.apex-region-locked canvas,
+.t-Region--chart.apex-region-locked svg {
+  filter: grayscale(0.8) opacity(0.5);
+  transition: filter var(--apx-lock-dur) var(--apx-lock-ease);
+  pointer-events: none;
+}
+
+/* Tabs */
+.t-TabsRegion.apex-region-locked .t-TabsRegion-items {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* === UTILITY CLASSES === */
+
+/* Debug helpers */
+.apx-debug-locked { 
+  border: 2px dashed var(--apx-warning-color) !important; 
+}
+
+.apx-debug-hidden { 
+  border: 2px dashed var(--apx-error-color) !important; 
+}
+
+.apx-debug-required { 
+  border: 2px dashed var(--apx-success-color) !important; 
+}
+
+/* Performance optimization */
+.apx-no-transitions * {
+  transition: none !important;
+  animation: none !important;
+}
+
+.apx-gpu-accelerated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Screen reader only */
+.apx-sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Enhanced focus indicators */
+.apex-lock:focus-within,
+.apex-region-locked:focus-within {
+  outline: 3px solid var(--apx-warning-color);
+  outline-offset: 2px;
+}
+
+/* === ANIMATION PRESETS === */
+
+/* Bounce effect */
+.apx-bounce-in {
+  animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Slide effects */
+.apx-slide-left {
+  animation: slideLeft var(--apx-layout-dur) var(--apx-layout-ease);
+}
+
+.apx-slide-right {
+  animation: slideRight var(--apx-layout-dur) var(--apx-layout-ease);
+}
+
+@keyframes slideLeft {
+  from { 
+    transform: translateX(100%); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+}
+
+@keyframes slideRight {
+  from { 
+    transform: translateX(-100%); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+}
+
+/* Fade variations */
+.apx-fade-in {
+  animation: fadeIn var(--apx-lock-dur) ease;
+}
+
+.apx-fade-out {
+  animation: fadeOut var(--apx-lock-dur) ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* === CUSTOM PROPERTIES FOR THEMING === */
+
+.apex-lock {
+  --item-lock-opacity: var(--apx-lock-dim, 0.8);
+  --item-lock-blur: var(--apx-lock-blur, 0.12px);
+  --item-lock-icon-color: var(--apx-lock-color, rgba(229, 57, 53, 0.45));
+}
+
+.apex-region-locked {
+  --region-lock-opacity: 0.6;
+  --region-lock-blur: 0.8px;
+  --region-lock-icon-size: 18px;
+  --region-mask-hover-bg: rgba(229, 57, 53, 0.02);
+}
+
+/* === CSS COMPLEMENTAR === 
+ * Adicione ao seu item_state.css ou em CSS inline:
+ */
+
+.apex-ig-cell-locked {
+  background-color: #f5f5f5 !important;
+  color: #999 !important;
+  pointer-events: none !important;
+}
+
+.apex-ig-cell-hidden {
+  display: none !important;
+}
+
+.apex-ig-row-locked {
+  background-color: #fafafa !important;
+  opacity: 0.7;
+}
+
+.apex-ig-row-hidden {
+  display: none !important;
+}
+
+.apex-ig-row-highlight {
+  background-color: #fff3cd !important;
+}
+
+.apex-ig-column-locked {
+  background-color: #f5f5f5 !important;
+  color: #999 !important;
+}
+
+.apex-ig-readonly {
+  opacity: 0.8;
+  pointer-events: none !important;
+}
+/*
+.is-required::after {
+  content: " *";
+  color: #d32f2f;
+  font-weight: bold;
+}
+*/
