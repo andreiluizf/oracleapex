@@ -2,10 +2,8 @@
   *** Enhanced APEX Item & Region State Manager *** 
   * Version: 4.2
   * Integrated layout management and maintained legacy compatibility.
-  * 
-  * Usage: setState.item("P1_NAME", { locked: true });
-  *        setState.region("my_region", { hidden: true });
-  *        setState.layout.collapseExpand("item1", "hide", "item2", "col-12", { animate: true });
+  
+  ** DOCUMENTATION: https://github.com/andreiluizf/oracleapex/blob/main/setState_documentation.md
 */
 
 (function(window, $) {
@@ -898,3 +896,4 @@
     window.restoreLayout = setState.restore.layout;
 
 })(window, jQuery);
+
