@@ -1,7 +1,9 @@
 /* *** Enhanced APEX Item & Region State CSS *** 
  * Version: 3.0
  * Optimized for performance with enhanced visual feedback
- */
+
+ *** DOCUMENTATION: https://github.com/andreiluizf/oracleapex/blob/main/setState_documentation.md
+*/
 
 :root {
   /* Animation timings - consistent with JS */
@@ -752,4 +754,5 @@
   color: #d32f2f;
   font-weight: bold;
 }
+
 */
