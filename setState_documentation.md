@@ -4,8 +4,8 @@
 
 The `setState` API is a robust, object-oriented solution for managing the state of items and regions in APEX applications. It is designed to simplify the manipulation of user interface elements, promoting consistency and reducing the amount of boilerplate code required for common tasks such as hiding, showing, locking, unlocking, making required or not required, and even managing column layouts.
 
-files: ``` [CSS](https://github.com/andreiluizf/oracleapex/blob/main/setState.css) ```
-https://github.com/andreiluizf/oracleapex/blob/main/setState.js
+files: [.js](https://github.com/andreiluizf/oracleapex/blob/main/setState.js) | [.css](https://github.com/andreiluizf/oracleapex/blob/main/setState.css)
+
 
 ### Fundamental Concepts
 
