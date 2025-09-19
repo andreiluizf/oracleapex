@@ -49,7 +49,7 @@ For the javascript, you can use the following snippet to put on your global.js f
 ```
 ` JS `
 ```js
-function setupCheckboxManager({
+function checkboxSelection({
   itemName,          // e.g., "P1_SELECTED_IDS"
   checkboxName,      // e.g., "f01"
   selectAllCheckbox  // e.g., "#selectunselectall"
