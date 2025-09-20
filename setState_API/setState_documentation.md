@@ -110,9 +110,9 @@ Applies multiple states to items.
 
 ```javascript
 setState.batch.items({
-    "P1_FIRST_NAME": { hidden: true, clearOnHide: true },
-    "P1_LAST_NAME": { locked: true },
-    "P1_AGE": { required: true }
+  "P1_FIRST_NAME": { hidden: true, clearOnHide: true },
+  "P1_LAST_NAME": { locked: true },
+  "P1_AGE": { required: true }
 });
 ```
 
@@ -126,8 +126,8 @@ Applies multiple states to regions.
 
 ```javascript
 setState.batch.regions({
-    "HEADER_REGION": { hidden: true },
-    "FOOTER_REGION": { locked: true, centerIcon: true }
+  "HEADER_REGION": { hidden: true },
+  "FOOTER_REGION": { locked: true, centerIcon: true }
 });
 ```
 
@@ -147,7 +147,7 @@ Returns the current state of an item.
 ```javascript
 const itemState = setState.get.item("P1_MY_ITEM");
 if (itemState.hidden) {
-    console.log("The item is hidden.");
+  console.log("The item is hidden.");
 }
 ```
 
@@ -163,7 +163,7 @@ Returns the current state of a region.
 ```javascript
 const regionState = setState.get.region("MY_REGION");
 if (regionState.locked) {
-    console.log("The region is locked.");
+  console.log("The region is locked.");
 }
 ```
 
@@ -380,13 +380,13 @@ const mySnapshot = setState.snapshot.create(["P1_FIELD_STATUS"], ["DETAIL_SECTIO
 console.log(mySnapshot);
 /*
 {
-    timestamp: "2023-10-27T10:00:00.000Z",
-    items: {
-        "P1_FIELD_STATUS": { hidden: false, locked: false, required: true, disabled: false, exists: true }
-    },
-    regions: {
-        "DETAIL_SECTION": { hidden: false, locked: false, disabled: false, exists: true }
-    }
+  timestamp: "2023-10-27T10:00:00.000Z",
+  items: {
+    "P1_FIELD_STATUS": { hidden: false, locked: false, required: true, disabled: false, exists: true }
+  },
+  regions: {
+    "DETAIL_SECTION": { hidden: false, locked: false, disabled: false, exists: true }
+  }
 }
 */
 ```
@@ -423,38 +423,38 @@ Allows you to define conditional rules to change the state of items and regions 
 ```javascript
 // Define conditional rules for the P1_STATUS item
 setState.conditional({
-    "P1_STATUS": [
-        { // If P1_STATUS is "COMPLETED"
-            operator: "=",
-            value: "COMPLETED",
-            actions: [
-                { type: "item", target: "P1_COMPLETION_DATE", state: { hidden: false, required: true } },
-                { type: "region", target: "COMPLETION_DETAILS", state: { hidden: false } }
-            ]
-        },
-        { // If P1_STATUS is not "COMPLETED"
-            operator: "!=",
-            value: "COMPLETED",
-            actions: [
-                { type: "item", target: "P1_COMPLETION_DATE", state: { hidden: true, required: false, clearOnHide: true } },
-                { type: "region", target: "COMPLETION_DETAILS", state: { hidden: true } }
-            ]
-        },
-        { // If P1_STATUS is "PENDING"
-            operator: "=",
-            value: "PENDING",
-            actions: [
-                { type: "item", target: "P1_REASON", state: { hidden: false, required: true } }
-            ]
-        },
-        { // If P1_STATUS is not "PENDING"
-            operator: "!=",
-            value: "PENDING",
-            actions: [
-                { type: "item", target: "P1_REASON", state: { hidden: true, required: false, clearOnHide: true } }
-            ]
-        }
-    ]
+  "P1_STATUS": [
+    { // If P1_STATUS is "COMPLETED"
+      operator: "=",
+      value: "COMPLETED",
+      actions: [
+        { type: "item", target: "P1_COMPLETION_DATE", state: { hidden: false, required: true } },
+        { type: "region", target: "COMPLETION_DETAILS", state: { hidden: false } }
+      ]
+    },
+    { // If P1_STATUS is not "COMPLETED"
+      operator: "!=",
+      value: "COMPLETED",
+      actions: [
+        { type: "item", target: "P1_COMPLETION_DATE", state: { hidden: true, required: false, clearOnHide: true } },
+        { type: "region", target: "COMPLETION_DETAILS", state: { hidden: true } }
+      ]
+    },
+    { // If P1_STATUS is "PENDING"
+      operator: "=",
+      value: "PENDING",
+      actions: [
+        { type: "item", target: "P1_REASON", state: { hidden: false, required: true } }
+      ]
+    },
+    { // If P1_STATUS is not "PENDING"
+      operator: "!=",
+      value: "PENDING",
+      actions: [
+        { type: "item", target: "P1_REASON", state: { hidden: true, required: false, clearOnHide: true } }
+      ]
+    }
+  ]
 });
 
 // This example will cause:
@@ -475,22 +475,22 @@ Imagine a form where the visibility of certain fields depends on the selection o
 ```javascript
 // In the change event of the P1_ITEM_TYPE item
 apex.item("P1_ITEM_TYPE").change(function() {
-    const itemType = this.getValue();
+  const itemType = this.getValue();
 
-    if (itemType === "PRODUCT") {
-        setState.show.item("P1_PRODUCT_DETAILS");
-        setState.hide.item("P1_SERVICE_DETAILS", { clearOnHide: true });
-    } else if (itemType === "SERVICE") {
-        setState.show.item("P1_SERVICE_DETAILS");
-        setState.hide.item("P1_PRODUCT_DETAILS", { clearOnHide: true });
-    } else {
-        setState.hide.item(["P1_PRODUCT_DETAILS", "P1_SERVICE_DETAILS"], { clearOnHide: true });
-    }
+  if (itemType === "PRODUCT") {
+    setState.show.item("P1_PRODUCT_DETAILS");
+    setState.hide.item("P1_SERVICE_DETAILS", { clearOnHide: true });
+  } else if (itemType === "SERVICE") {
+    setState.show.item("P1_SERVICE_DETAILS");
+    setState.hide.item("P1_PRODUCT_DETAILS", { clearOnHide: true });
+  } else {
+    setState.hide.item(["P1_PRODUCT_DETAILS", "P1_SERVICE_DETAILS"], { clearOnHide: true });
+  }
 });
 
 // To initialize the state on page load
 $(document).ready(function() {
-    apex.item("P1_ITEM_TYPE").trigger("change");
+  apex.item("P1_ITEM_TYPE").trigger("change");
 });
 ```
 
@@ -505,10 +505,10 @@ setState.lock.region("MY_DATA_ENTRY_REGION", { centerIcon: true });
 // After the AJAX call or process is complete
 // (Example with Promise)
 myAsyncProcess().then(function() {
-    setState.unlock.region("MY_DATA_ENTRY_REGION");
+  setState.unlock.region("MY_DATA_ENTRY_REGION");
 }).catch(function(error) {
-    console.error("Error in process: ", error);
-    setState.unlock.region("MY_DATA_ENTRY_REGION"); // Unlock even in case of error
+  console.error("Error in process: ", error);
+  setState.unlock.region("MY_DATA_ENTRY_REGION"); // Unlock even in case of error
 });
 ```
 
@@ -519,12 +519,12 @@ Toggle the column layout to optimize screen space, for example, when focusing on
 ```javascript
 // Button to expand the details region and collapse the summary region
 $("#BTN_SHOW_DETAILS").on("click", function() {
-    setState.layout.collapseExpand("SUMMARY_REGION", 4, "DETAIL_REGION", 8, { animate: true });
+  setState.layout.collapseExpand("SUMMARY_REGION", 4, "DETAIL_REGION", 8, { animate: true });
 });
 
 // Button to restore the original layout
 $("#BTN_RESET_LAYOUT").on("click", function() {
-    setState.restore.layout("SUMMARY_REGION", "DETAIL_REGION");
+  setState.restore.layout("SUMMARY_REGION", "DETAIL_REGION");
 });
 ```
 
@@ -537,20 +537,20 @@ let formSnapshot;
 
 // Save the form state before opening a confirmation modal
 $("#BTN_SAVE_FORM").on("click", function() {
-    formSnapshot = setState.snapshot.create(
-        ["P1_FIELD_A", "P1_FIELD_B"], 
-        ["FORM_REGION_1", "FORM_REGION_2"]
-    );
-    // Open confirmation modal
-    openConfirmationModal();
+  formSnapshot = setState.snapshot.create(
+    ["P1_FIELD_A", "P1_FIELD_B"], 
+    ["FORM_REGION_1", "FORM_REGION_2"]
+  );
+  // Open confirmation modal
+  openConfirmationModal();
 });
 
 // If the user cancels the operation in the modal
 $("#BTN_CANCEL_CONFIRMATION").on("click", function() {
-    if (formSnapshot) {
-        setState.snapshot.restore(formSnapshot);
-    }
-    closeConfirmationModal();
+  if (formSnapshot) {
+    setState.snapshot.restore(formSnapshot);
+  }
+  closeConfirmationModal();
 });
 ```
 
