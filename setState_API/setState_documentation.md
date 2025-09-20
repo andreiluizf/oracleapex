@@ -31,8 +31,8 @@ The API supports method chaining, allowing for concise operations:
 
 ```javascript
 setState
-    .item('P1_ITEM_A', { hidden: true })
-    .region('REGION_B', { locked: true });
+  .item('P1_ITEM_A', { hidden: true })
+  .region('REGION_B', { locked: true });
 ```
 
 ## API Reference
