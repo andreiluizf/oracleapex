@@ -3,7 +3,7 @@
   * Version: 4.2
   * Integrated layout management and maintained legacy compatibility.
   
-  ** DOCUMENTATION: https://github.com/andreiluizf/oracleapex/blob/main/setState_documentation.md
+  ** DOCUMENTATION: https://github.com/andreiluizf/oracleapex/setState_API/blob/main/setState_documentation.md
 */
 
 (function(window, $) {
