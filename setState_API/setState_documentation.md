@@ -62,10 +62,10 @@ setState.item(["P1_ITEM_A", "P1_ITEM_B"], { locked: true });
 
 // Make an item required and execute a callback
 setState.item("P1_EMAIL", { 
-    required: true,
-    onStateChange: function(itemId, state) {
-        console.log(`Item ${itemId} is now required: ${state.required}`);
-    }
+  required: true,
+  onStateChange: function(itemId, state) {
+    console.log(`Item ${itemId} is now required: ${state.required}`);
+  }
 });
 ```
 
